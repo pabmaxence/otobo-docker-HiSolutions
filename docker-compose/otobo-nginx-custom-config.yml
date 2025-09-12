@@ -8,6 +8,11 @@ services:
   nginx:
     volumes:
       - otobo_nginx_custom_config:/etc/nginx/config/template-custom
+    logging:
+        driver: "syslog"
+        options:
+          syslog-address: "tcp://syslog:514"
+          tag: "otobo-nginx"
 
 volumes:
   otobo_nginx_custom_config:

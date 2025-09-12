@@ -4,7 +4,7 @@
 # For HTTPS see the extension file docker-compose/otobo-override-https.yml.
 
 # See also README.md.
-
+:w
 # The toplevel attribute 'version' is obsolet and not used by current versions of docker compose.
 # The attribute is still provided here because there were problems with standalone Docker Compose 1.25
 # after removing the attribute.
@@ -14,7 +14,7 @@ services:
 
   # the database
   db:
-    image: ${OTOBO_IMAGE_DB:-mariadb:10.5}
+    image: ${OTOBO_IMAGE_DB:-mariadb:11.4}
     user: mysql:mysql
     cap_drop:
         - ALL
@@ -22,10 +22,10 @@ services:
         - CAP_SYS_CHROOT
     restart: always
     logging:
-        driver: "local"
+        driver: "syslog"
         options:
-            max-file: "5"
-            max-size: "10m"
+          syslog-address: "tcp://syslog:514"
+          tag: "mariadb"
     volumes:
       - mariadb_data:/var/lib/mysql
 
@@ -75,10 +75,10 @@ services:
       - redis
     restart: always
     logging:
-        driver: "local"
+        driver: "syslog"
         options:
-            max-file: "5"
-            max-size: "10m"
+            syslog-address: "tcp://syslog:514"
+            tag: "otobo-web"
     # The HTTP port might be specified in a docker-compose extension file, e.g. docker-compose/otobo-override-http.yml.
     # For HTTPS no HTTP port is exposed.
     #ports:
@@ -100,10 +100,10 @@ services:
       - web
     restart: always
     logging:
-        driver: "local"
+        driver: "syslog"
         options:
-            max-file: "5"
-            max-size: "10m"
+            syslog-address: "tcp://syslog:514"
+            tag: "otobo-daemon"
     volumes:
       - opt_otobo:/opt/otobo
     command: daemon
@@ -121,10 +121,10 @@ services:
         - CAP_SETGID
     restart: always
     logging:
-        driver: "local"
+        driver: "syslog"
         options:
-            max-file: "5"
-            max-size: "10m"
+            syslog-address: "tcp://syslog:514"
+            tag: "otobo-elasticsearch"
     environment:
       discovery.type: single-node
       ES_JAVA_OPTS: ${OTOBO_ELASTICSEARCH_ES_JAVA_OPTS:?err}
@@ -135,17 +135,17 @@ services:
 
   # a container running Redis
   redis:
-    image: ${OTOBO_IMAGE_REDIS:-redis:6.0-alpine}
+    image: ${OTOBO_IMAGE_REDIS:-redis:7.4-alpine}
     user: redis:redis
     cap_drop:
         - ALL
     #cap_add:
     restart: always
     logging:
-        driver: "local"
+        driver: "syslog"
         options:
-            max-file: "5"
-            max-size: "10m"
+            syslog-address: "tcp://syslog:514"
+            tag: "otobo-redis"
     volumes:
       - redis_data:/data
     healthcheck:
