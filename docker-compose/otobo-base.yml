@@ -4,11 +4,11 @@
 # For HTTPS see the extension file docker-compose/otobo-override-https.yml.
 
 # See also README.md.
-:w
+
 # The toplevel attribute 'version' is obsolet and not used by current versions of docker compose.
 # The attribute is still provided here because there were problems with standalone Docker Compose 1.25
 # after removing the attribute.
-version: '3.3'
+# version: '3.3'
 
 services:
 
@@ -22,9 +22,9 @@ services:
         - CAP_SYS_CHROOT
     restart: always
     logging:
-        driver: "syslog"
+        driver: syslog
         options:
-          syslog-address: "tcp://syslog:514"
+          syslog-address: "unixgram:///dev/log"
           tag: "mariadb"
     volumes:
       - mariadb_data:/var/lib/mysql
@@ -77,7 +77,7 @@ services:
     logging:
         driver: "syslog"
         options:
-            syslog-address: "tcp://syslog:514"
+            syslog-address: "unixgram:///dev/log"
             tag: "otobo-web"
     # The HTTP port might be specified in a docker-compose extension file, e.g. docker-compose/otobo-override-http.yml.
     # For HTTPS no HTTP port is exposed.
@@ -102,7 +102,7 @@ services:
     logging:
         driver: "syslog"
         options:
-            syslog-address: "tcp://syslog:514"
+            syslog-address: "unixgram:///dev/log"
             tag: "otobo-daemon"
     volumes:
       - opt_otobo:/opt/otobo
@@ -123,7 +123,7 @@ services:
     logging:
         driver: "syslog"
         options:
-            syslog-address: "tcp://syslog:514"
+            syslog-address: "unixgram:///dev/log"
             tag: "otobo-elasticsearch"
     environment:
       discovery.type: single-node
@@ -144,7 +144,7 @@ services:
     logging:
         driver: "syslog"
         options:
-            syslog-address: "tcp://syslog:514"
+            syslog-address: "unixgram:///dev/log"
             tag: "otobo-redis"
     volumes:
       - redis_data:/data

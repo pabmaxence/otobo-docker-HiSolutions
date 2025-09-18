@@ -8,7 +8,7 @@
 # Ses also https://docs.min.io/docs/deploy-minio-on-docker-compose.html
 
 # same version as in otobo-base.yml
-version: '3.3'
+# version: '3.3'
 
 services:
 
