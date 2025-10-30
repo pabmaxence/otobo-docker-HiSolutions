@@ -1,0 +1,18 @@
+[libdefaults]
+  default_realm = ${OTOBO_NGINX_KERBEROS_REALM}
+  dns_lookup_realm = false
+  dns_lookup_kdc = true
+  rdns = false
+  ticket_lifetime = 24h
+  forwardable = true
+
+[realms]
+  ${OTOBO_NGINX_KERBEROS_REALM} = {
+    kdc = ${OTOBO_NGINX_KERBEROS_KDC}
+    admin_server = ${OTOBO_NGINX_KERBEROS_ADMIN_SERVER:-${OTOBO_NGINX_KERBEROS_KDC}}
+  }
+
+[domain_realm]
+  .${OTOBO_NGINX_KERBEROS_DEFAULT_DOMAIN} = ${OTOBO_NGINX_KERBEROS_REALM}
+  ${OTOBO_NGINX_KERBEROS_DEFAULT_DOMAIN} = ${OTOBO_NGINX_KERBEROS_REALM}
+
