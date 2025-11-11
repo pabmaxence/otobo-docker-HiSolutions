@@ -1,0 +1,19 @@
+# Provide a custom nginx config.
+
+# See also README.md.
+
+# version: '3.3'
+
+services:
+  nginx:
+    volumes:
+      - otobo_nginx_custom_config:/etc/nginx/config/template-custom
+    logging:
+        driver: "syslog"
+        options:
+          syslog-address: "unixgram:///dev/log"
+          tag: "otobo-nginx"
+
+volumes:
+  otobo_nginx_custom_config:
+    external: true

@@ -17,7 +17,7 @@ COMPOSE_PROJECT_NAME=otobo
 # Additional services can be added by concatenating more files to COMPOSE_FILE. An example would services
 # for S3 compatible storage. That is: :docker-compose/otobo-localstack.yml or :docker-compose/otobo-minio.yml
 COMPOSE_PATH_SEPARATOR=:
-COMPOSE_FILE=docker-compose/otobo-base.yml:docker-compose/otobo-override-https-kerberos.yml
+COMPOSE_FILE=docker-compose/otobo-base.yml:docker-compose/otobo-override-https-kerberos-HiS.yml
 
 # Database configuration
 # OTOBO_DB_ROOT_PASSWORD must be set
@@ -81,6 +81,10 @@ NGINX_ENVSUBST_TEMPLATE_DIR=
 
 # Elasticsearch options
 OTOBO_ELASTICSEARCH_ES_JAVA_OPTS=-Xms512m -Xmx512m
+
+# mxc for HiSolutions
+OTOBO_NGINX_ADD_HEADER=X-Content-Type-Options "nosniff" always;
+#OTOBO_NGINX_ADD_HEADER=
 
 ################################################################################
 # The Docker image for the service 'db' can be specified explicitly.
