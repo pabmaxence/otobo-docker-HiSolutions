@@ -14,7 +14,7 @@ services:
 
   # the database
   db:
-    image: ${OTOBO_IMAGE_DB:-mariadb:11.4}
+    image: ${OTOBO_IMAGE_DB:-mariadb:lts-noble}
     user: mysql:mysql
     cap_drop:
         - ALL
@@ -54,14 +54,14 @@ services:
     # Up to MariaDB 10.5 the server executable was 'mysqld'. Later versions use 'mariadbd'.
     command: --max-allowed-packet=136314880 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --innodb-log-file-size=268435456 --query-cache-size=${OTOBO_DB_QUERY_CACHE_SIZE:-33554432}
 
-    # "mysqladmin ping" sets the exit code $?. The exit code will be 0 (success) when the server can be reached,
+    # "mariadb-admin ping" sets the exit code $?. The exit code will be 0 (success) when the server can be reached,
     # not 0 (failure) otherwise.
     # The host is given as db, because localhost might not be resolved on some systems.
     # The credentials are not really needed for pinging, but without them we would get "Access denied" log messages
     # every time the health check is executed.
     # Note: alternatively /usr/local/bin/healthcheck.sh could be used.
     healthcheck:
-      test: mysqladmin -h db --user=root --password='${OTOBO_DB_ROOT_PASSWORD}' ping
+      test: mariadb-admin -h db --user=root --password='${OTOBO_DB_ROOT_PASSWORD}' ping
 
   # a container running a webserver
   web:
@@ -86,7 +86,7 @@ services:
     #    - "80:5000"
     volumes:
       - opt_otobo:/opt/otobo
-    command: web
+    command: web ${OTOBO_WEB_OPTION:-}
     healthcheck:
       test: curl -s -f http://localhost:5000/robots.txt
 
@@ -136,7 +136,7 @@ services:
 
   # a container running Redis
   redis:
-    image: ${OTOBO_IMAGE_REDIS:-redis:7.4-alpine}
+    image: ${OTOBO_IMAGE_REDIS:-redis:8-bookworm}
     user: redis:redis
     cap_drop:
         - ALL
@@ -145,12 +145,11 @@ services:
     logging:
         driver: "syslog"
         options:
-            syslog-address: "unixgram:///dev/log"
-            tag: "otobo-redis"
-    volumes:
-      - redis_data:/data
+            max-file: "5"
+            max-size: "10m"
     healthcheck:
       test: redis-cli ping
+    command: [ "redis-server", "--save", "" ]
 
 
 # no volumes need to be exposed across services
@@ -158,4 +157,3 @@ volumes:
   mariadb_data: {}
   opt_otobo: {}
   elasticsearch_data: {}
-  redis_data: {}

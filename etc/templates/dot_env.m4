@@ -20,7 +20,7 @@ See ./scripts/devel/generate_sample_env_files.sh -h for how to regenerate the sa
 # These are the macros that should be adapted for new releases and new development branches.
 # All of these macros affect only comment lines in the generated sample .env files.
 m4_define(`otovar_MINOR_RELEASE_TAG',`latest-11_0')
-m4_define(`otovar_PATCH_LEVEL_TAG',`rel-11_0_11')
+m4_define(`otovar_PATCH_LEVEL_TAG',`rel-11_0_13')
 m4_define(`otovar_DEVEL_TAG',`devel-rel-11_0')
 m4_define(`otovar_LOCAL_BUILD_TAG',`local-11.0.x')
 
@@ -111,6 +111,12 @@ m4_ifdef(
 # Set OTOBO_WEB_HTTP_IPADDR when only requests addressed to a specific IP should be served.
 # See https://docs.docker.com/compose/compose-file/compose-file-v3/#ports
 #OTOBO_WEB_HTTP_IPADDR=<your special ip address>
+
+# The option OTOBO_WEB_OPTION influences which webserver is used with which options.
+# The default value is 'deployment'
+#OTOBO_WEB_OPTION=deployment              # the default, should be used in production and most times during development
+#OTOBO_WEB_OPTION=development             # can be useful during development, sets PLACK_ENV to 'development'
+#OTOBO_WEB_OPTION=shotgun                 # use the shotgun, start a new process for every request
 m4_ifdef( `otoflag_HTTP', `m4_divert(-1)')m4_dnl
 
 # HTTPS options
@@ -164,7 +170,7 @@ OTOBO_ELASTICSEARCH_ES_JAVA_OPTS=-Xms512m -Xmx512m
 
 ################################################################################
 # The Docker image for the service 'db' can be specified explicitly.
-# The default is mariadb:10.5
+# The default is mariadb:lts-noble
 ################################################################################
 #OTOBO_IMAGE_DB=
 
@@ -190,7 +196,7 @@ OTOBO_ELASTICSEARCH_ES_JAVA_OPTS=-Xms512m -Xmx512m
 
 ################################################################################
 # The Docker image for the service 'redis' can be specified explicitly.
-# The default is redis:6.0-alpine
+# The default is redis:8-bookworm
 ################################################################################
 #OTOBO_IMAGE_REDIS=
 
