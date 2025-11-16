@@ -17,11 +17,11 @@ COMPOSE_PROJECT_NAME=otobo
 # Additional services can be added by concatenating more files to COMPOSE_FILE. An example would services
 # for S3 compatible storage. That is: :docker-compose/otobo-localstack.yml or :docker-compose/otobo-minio.yml
 COMPOSE_PATH_SEPARATOR=:
-COMPOSE_FILE=docker-compose/otobo-base.yml:docker-compose/otobo-override-https-kerberos-HiS.yml
+COMPOSE_FILE=docker-compose/otobo-base.yml:otobo-nginx-custom-config-HiS.yml:docker-compose/otobo-override-https-kerberos-HiS.yml
 
 # Database configuration
 # OTOBO_DB_ROOT_PASSWORD must be set
-OTOBO_DB_ROOT_PASSWORD=..mxc..
+OTOBO_DB_ROOT_PASSWORD=..mxc..                                          #HiSolutions
 
 # Set this to a value in bytes to overwrite the default query size set for OTOBO
 #OTOBO_DB_QUERY_CACHE_SIZE=
@@ -47,33 +47,34 @@ OTOBO_DB_ROOT_PASSWORD=..mxc..
 # The settings OTOBO_NGINX_SSL_CERTIFICATE and OTOBO_NGINX_SSL_CERTIFICATE_KEY
 # are mandatory when HTTPS is used.
 # The configured pathes must be absolute pathes that are available in the container.
-OTOBO_NGINX_SSL_CERTIFICATE=/etc/nginx/ssl/nginx-selfsigned.crt
-OTOBO_NGINX_SSL_CERTIFICATE_KEY=/etc/nginx/ssl/nginx-selfsigned.key
+# Der Hostpfad '/etc/nginx/ssl/' ist von Rother hart codiert und kann nicht geaendert werden.
+OTOBO_NGINX_SSL_CERTIFICATE=/etc/nginx/ssl/nginx-selfsigned.crt             #HiSolutions
+OTOBO_NGINX_SSL_CERTIFICATE_KEY=/etc/nginx/ssl/nginx-selfsigned.key         #HiSolutions
 #OTOBO_NGINX_SSL_CERTIFICATE=
 #OTOBO_NGINX_SSL_CERTIFICATE_KEY=
 
 # Kerberos Options
 
 # Kerberos keytab, default is /etc/krb5.keytab
-OTOBO_NGINX_KERBEROS_KEYTAB=/opt/otobo-docker/nginx-conf/krb5.keytab
+OTOBO_NGINX_KERBEROS_KEYTAB=/opt/otobo-docker/nginx-conf/krb5.keytab        #HiSolutions
 
 # Kerberos config, default is /etc/krb5.conf as generated krb5.conf.template
-OTOBO_NGINX_KERBEROS_CONFIG=/opt/otobo-docker/nginx-conf/krb5.conf
+OTOBO_NGINX_KERBEROS_CONFIG=/opt/otobo-docker/nginx-conf/krb5.conf          #HiSolutions
 
 # Kerberos Service Name
-OTOBO_NGINX_KERBEROS_SERVICE_NAME=HTTP/hisolutionsp252.rhe.local
+OTOBO_NGINX_KERBEROS_SERVICE_NAME=HTTP/hisolutionsp25.rhe.local             #HiSolutions
 
 # Kerberos REALM
-OTOBO_NGINX_KERBEROS_REALM=RHE.LOCAL
+OTOBO_NGINX_KERBEROS_REALM=RHE.LOCAL                                        #HiSolutions
 
 # Kerberos kdc / AD Controller
-OTOBO_NGINX_KERBEROS_KDC=dc2.rhe.local
+OTOBO_NGINX_KERBEROS_KDC=dc2.rhe.local                                      #HiSolutions
 
 # Kerberos Admin Server
-OTOBO_NGINX_KERBEROS_ADMIN_SERVER=rhe.local
+OTOBO_NGINX_KERBEROS_ADMIN_SERVER=rhe.local                                 #HiSolutions
 
 # Kerberos Default Domain
-OTOBO_NGINX_KERBEROS_DEFAULT_DOMAIN=rhe.local
+OTOBO_NGINX_KERBEROS_DEFAULT_DOMAIN=rhe.local                               #HiSolutions
 
 # Kerberos Substitute Template Directory
 NGINX_ENVSUBST_TEMPLATE_DIR=
