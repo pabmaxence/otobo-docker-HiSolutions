@@ -17,7 +17,7 @@ COMPOSE_PROJECT_NAME=otobo
 # Additional services can be added by concatenating more files to COMPOSE_FILE. An example would services
 # for S3 compatible storage. That is: :docker-compose/otobo-localstack.yml or :docker-compose/otobo-minio.yml
 COMPOSE_PATH_SEPARATOR=:
-COMPOSE_FILE=docker-compose/otobo-base.yml:otobo-nginx-custom-config-HiS.yml:docker-compose/otobo-override-https-kerberos-HiS.yml
+COMPOSE_FILE=docker-compose/otobo-base-HiS.yml:docker-compose/otobo-nginx-custom-config-HiS.yml:docker-compose/otobo-override-https-kerberos-HiS.yml
 
 # Database configuration
 # OTOBO_DB_ROOT_PASSWORD must be set
@@ -56,10 +56,10 @@ OTOBO_NGINX_SSL_CERTIFICATE_KEY=/etc/nginx/ssl/nginx-selfsigned.key         #HiS
 # Kerberos Options
 
 # Kerberos keytab, default is /etc/krb5.keytab
-OTOBO_NGINX_KERBEROS_KEYTAB=/opt/otobo-docker/nginx-conf/krb5.keytab        #HiSolutions
+OTOBO_NGINX_KERBEROS_KEYTAB=/opt/otobo-docker-HiSolutions/nginx-conf/krb5.keytab        #HiSolutions
 
 # Kerberos config, default is /etc/krb5.conf as generated krb5.conf.template
-OTOBO_NGINX_KERBEROS_CONFIG=/opt/otobo-docker/nginx-conf/krb5.conf          #HiSolutions
+OTOBO_NGINX_KERBEROS_CONFIG=/opt/otobo-docker-HiSolutions/nginx-conf/krb5.conf          #HiSolutions
 
 # Kerberos Service Name
 OTOBO_NGINX_KERBEROS_SERVICE_NAME=HTTP/hisolutionsp25.rhe.local             #HiSolutions
