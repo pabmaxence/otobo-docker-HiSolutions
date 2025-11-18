@@ -34,7 +34,7 @@ services:
       - ${OTOBO_NGINX_KERBEROS_KEYTAB:-/etc/krb5.keytab}:/etc/krb5.keytab:rw
       # uncomment when /etc/krb5.conf should be mounted from the Docker host
       #- ${OTOBO_NGINX_KERBEROS_CONFIG:-/etc/krb5.conf}:/etc/krb5.conf:ro
-      - /opt/otobo-docker-HiSolutions/nginx-conf/kerberos/templates:/etc/nginx/kerberos/templates:ro
+      - /opt/otobo-docker/nginx-conf/kerberos/templates:/etc/nginx/kerberos/templates:ro
      # - krb-helper:/etc/nginx/config/template-custom
     # The HTTP port is exposed, but only redirects to HTTPS
     ports:
