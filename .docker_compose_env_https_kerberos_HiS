@@ -21,7 +21,7 @@ COMPOSE_FILE=docker-compose/otobo-base.yml:otobo-nginx-custom-config-HiS.yml:doc
 
 # Database configuration
 # OTOBO_DB_ROOT_PASSWORD must be set
-OTOBO_DB_ROOT_PASSWORD=..mxc..                                          #HiSolutions
+OTOBO_DB_ROOT_PASSWORD=                                          #HiSolutions: Fuer die Installationsroutine merken!
 
 # Set this to a value in bytes to overwrite the default query size set for OTOBO
 #OTOBO_DB_QUERY_CACHE_SIZE=
@@ -48,8 +48,8 @@ OTOBO_DB_ROOT_PASSWORD=..mxc..                                          #HiSolut
 # are mandatory when HTTPS is used.
 # The configured pathes must be absolute pathes that are available in the container.
 # Der Hostpfad '/etc/nginx/ssl/' ist von Rother hart codiert und kann nicht geaendert werden.
-OTOBO_NGINX_SSL_CERTIFICATE=/etc/nginx/ssl/nginx-selfsigned.crt             #HiSolutions
-OTOBO_NGINX_SSL_CERTIFICATE_KEY=/etc/nginx/ssl/nginx-selfsigned.key         #HiSolutions
+OTOBO_NGINX_SSL_CERTIFICATE=/etc/nginx/ssl/nginx-selfsigned.crt             #HiSolutions: Nur den Namen anpassen!
+OTOBO_NGINX_SSL_CERTIFICATE_KEY=/etc/nginx/ssl/nginx-selfsigned.key         #HiSolutions: Nur den Namen anpassen!
 #OTOBO_NGINX_SSL_CERTIFICATE=
 #OTOBO_NGINX_SSL_CERTIFICATE_KEY=
 
@@ -77,15 +77,11 @@ OTOBO_NGINX_KERBEROS_ADMIN_SERVER=rhe.local                                 #HiS
 OTOBO_NGINX_KERBEROS_DEFAULT_DOMAIN=rhe.local                               #HiSolutions
 
 # Kerberos Substitute Template Directory
-NGINX_ENVSUBST_TEMPLATE_DIR=
-#NGINX_ENVSUBST_TEMPLATE_DIR=/etc/nginx/config/template-custom
+#NGINX_ENVSUBST_TEMPLATE_DIR=
+NGINX_ENVSUBST_TEMPLATE_DIR=/etc/nginx/config/template-custom
 
-# Elasticsearch options
+# Elasticsearch options: Sollt
 OTOBO_ELASTICSEARCH_ES_JAVA_OPTS=-Xms512m -Xmx512m
-
-# mxc for HiSolutions
-OTOBO_NGINX_ADD_HEADER=X-Content-Type-Options "nosniff" always;
-#OTOBO_NGINX_ADD_HEADER=
 
 ################################################################################
 # The Docker image for the service 'db' can be specified explicitly.
